@@ -1,0 +1,19 @@
+section#info
+  .row
+    .columns.collapse(data-sticky-container="")
+      .columns.sticky(data-sticky data-margin-top="0" data-top-anchor="main-content-anchor")
+        nav(role="navigation" ng-class="{inactiveBtn : currentAsset.editingMode}")
+          btn-new-asset
+          btn-get-code
+
+asset-list-nav(ng-class="{inactiveBtn : currentAsset.editingMode}")
+
+section#main-content-anchor
+section#site-jade-container(ui-view="jadeAssetView")
+section#site-reactivation-container(ui-view="reactivationAssetView" ng-show="currentAsset.currentMode == 'reactivation'")
+section#site-new-container(ui-view="newSiteAssetView" ng-show="btnToggles.newSiteAssetBtn")
+section#site-asset-container.sort-site-assets2(ui-view="siteAssetView" ng-show="currentAsset.currentAssetDate")
+
+
+
+

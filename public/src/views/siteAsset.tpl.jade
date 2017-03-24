@@ -1,0 +1,114 @@
+
+
+.row
+  .columns.medium-2.medium-push-10
+    nav#site-asset-nav
+      .row
+        .columns.collapse
+          h4 &nbsp;
+          open-reactivation-tool(ng-class="{inactiveBtn : currentAsset.editingMode}")
+          add-module(data-add-asset-type='homepageModules' data-add-asset-title="Add Module" ng-class="{inactiveBtn : currentAsset.editingMode}")
+          add-module(data-add-asset-type='flyouts' data-add-asset-title="Add Flyout" ng-class="{inactiveBtn : currentAsset.editingMode}")
+          add-module(data-add-asset-type='globalAs' data-add-asset-title="Add Global A" ng-class="{inactiveBtn : currentAsset.editingMode}")
+          add-module(data-add-asset-type='globalCs' data-add-asset-title="Add Global C" ng-class="{inactiveBtn : currentAsset.editingMode}")
+          nav-btn-sort(ng-class="{inactiveBtn : currentAsset.editingMode}")
+          //a.button Save
+  .columns.medium-10.medium-pull-2
+    .site-asset-container-inner
+      .module-container(ng-repeat="siteAsset in siteData | filter:{date : currentAsset.currentAssetDate } track by $index" ng-class="activeDate" data-asset-date="{{currentAssetDate}}" data-uuid="{{siteAsset.uuid}}")
+        .row.modules-homepage
+          .columns.collapse.col-info-title
+            h4 {{siteAsset.date}}  - Homepage Modules
+          div(ui-sortable="sortableOptions" ng-model="siteAsset.homepageModules")
+            .columns.col-info-container.collapse(ng-repeat="homepageModule in siteAsset.homepageModules track by $index" , ng-class="{'medium-12':homepageModule.columns == '1' , 'medium-6':homepageModule.columns == '2' , 'medium-4':homepageModule.columns == '3'}", data-homepage-position data-2col-position data-3col-position data-uuid="{{homepageModule.uuid}}")
+              track-module-row-position
+              track-module-col-position
+              .col-info-container-inner
+                .row.collapse.col-info-name
+                  input.formInput.homepageModuleName(type="text" name="{{homepageModule.name}}" , placeholder="Homepage Module Alt", ng-value="homepageModule.name" , ng-model="homepageModule.name")
+                .row.collapse.col-info-cta
+                  .card(ng-repeat="bgcta in homepageModule.bgcta track by $index")
+                    .col-info-box.col-info-box-bg
+                      input.formInput(type="text" , value="Background Image")
+                      input.formInput(type="text" , name="{{bgcta.link}}" , placeholder="Background Image Link", ng-value="bgcta.link", ng-model="bgcta.link")
+                      input.formInput(type="text" , name="{{bgcta.tracking}}" , placeholder="Background Image Tracking", ng-value="bgcta.tracking", ng-model="bgcta.tracking")
+                  .card(ng-repeat="cta in homepageModule.ctas track by $index"  data-uuid="{{cta.uuid}}")
+                    .col-info-box
+                      input.formInput(type="text" , name="{{cta.name}}" , placeholder="CTA Name", ng-value="cta.name", ng-model="cta.name")
+                      input.formInput(type="text" , name="{{cta.link}}" , placeholder="CTA Link", ng-value="cta.link", ng-model="cta.link")
+                      input.formInput(type="text" , name="{{cta.tracking}}" , placeholder="CTA Tracking", ng-value="cta.tracking", ng-model="cta.tracking")
+                      remove-module-cta
+                .row.collapse.col-info-create-cta      
+                  create-module-cta
+                .row.collapse.col-info-legal
+                  input.formInput.homepageModuleLegal(type="text", name="{{homepageModule.legal}}", placeholder="Homepage Module Legal", ng-value="homepageModule.legal" , ng-model="homepageModule.legal")
+                .row.collapse.col-info-options  
+                  .columns.small-12.col-options
+                    set-module-cols
+                    delete-module
+                  .columns.small-6.col-options
+                  .clearfix    
+        .row.modules-flyouts
+          .columns.collapse.col-info-title
+            h4 {{siteAsset.date}}  - Flyouts
+          .columns.col-info-container.collapse
+            .columns.col-info-container-inner
+              .col-info-box.col-info-box-bg(ui-sortable ng-model="siteAsset.flyouts")
+                .row.collapse(ng-repeat="flyout in siteAsset.flyouts track by $index"  data-uuid="{{flyout.uuid}}")
+                  .columns.small-3
+                    input.formInput(type="text" , name="{{flyout.name}}" , placeholder="{{flyout.name}}", ng-value="flyout.name")
+                  .columns.small-3
+                    input.formInput(type="text" , name="{{flyout.location}}" , placeholder="{{flyout.location}}", ng-value="flyout.location")
+                  .columns.small-3
+                    input.formInput(type="text" , name="{{flyout.link}}" , placeholder="{{flyout.link}}", ng-value="flyout.link")
+                  .columns.small-3
+                    input.formInput(type="text" , name="{{flyout.tracking}}" , placeholder="{{flyout.tracking}}", ng-value="flyout.tracking")
+        .row.modules-global-a
+          .columns.collapse.col-info-title
+            h4 {{siteAsset.date}}  - Global A
+          .columns.col-info-container.collapse
+            .columns.col-info-container-inner
+              .col-info-box.col-info-box-bg(ui-sortable ng-model="siteAsset.globalAs")
+                .row.collapse(ng-repeat="glbla in siteAsset.globalAs track by $index"  data-uuid="{{glbla.uuid}}")
+                  .columns.small-3
+                    input.formInput(type="text" , name="{{glbla.name}}" , placeholder="{{glbla.name}}", ng-value="glbla.name")
+                  .columns.small-3
+                    input.formInput(type="text" , name="{{glbla.location}}" , placeholder="{{glbla.location}}", ng-value="glbla.location")
+                  .columns.small-3
+                    input.formInput(type="text" , name="{{glbla.link}}" , placeholder="{{glbla.link}}", ng-value="glbla.link")
+                  .columns.small-3
+                    input.formInput(type="text" , name="{{glbla.tracking}}" , placeholder="{{glbla.tracking}}", ng-value="glbla.tracking")
+        .row.modules-global-c
+          .columns.collapse.col-info-title
+            h4 {{siteAsset.date}}  - Global C
+          .columns.col-info-container.collapse
+            .columns.col-info-container-inner
+              .col-info-box.col-info-box-bg(ui-sortable ng-model="siteAsset.globalCs")
+                .row(ng-repeat="glblc in siteAsset.globalCs track by $index"  data-uuid="{{glblc.uuid}}")
+                  .columns.small-3
+                    input.formInput(type="text" , name="{{glblc.name}}" , placeholder="{{glblc.name}}", ng-value="glblc.name")
+                  .columns.small-3
+                    input.formInput(type="text" , name="{{glblc.location}}" , placeholder="{{glblc.location}}", ng-value="glblc.location")
+                  .columns.small-3
+                    input.formInput(type="text" , name="{{glblc.link}}" , placeholder="{{glblc.link}}", ng-value="glblc.link")
+                  .columns.small-3
+                    input.formInput(type="text" , name="{{glblc.tracking}}" , placeholder="{{glblc.tracking}}", ng-value="glblc.tracking")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -1,0 +1,57 @@
+.row(ng-show="btnToggles.jadeBtn")
+	.columns
+		#editor
+			div(ng-repeat="siteAsset in siteData | filter:{date : currentAssetDate} track by $id($index)")
+				div(ng-repeat="homepageModule in siteAsset.homepageModules track by $id($index)")
+					span(ng-if="homepageModule.columns == 1")
+						.jade-output-line.jade-indent-0
+							| ////// START {{homepageModule.name}} //////
+						.jade-output-line.jade-indent-0
+							| .row.jab-hpb  
+						.jade-output-line.jade-indent-1
+							| #[span &nbsp;&nbsp;].columns.collapse-for-medium-up  
+						.jade-output-line.jade-indent-2
+							| #[span &nbsp;&nbsp;&nbsp;&nbsp;]figure.columns.collapse
+						.jade-output-line.jade-indent-3(ng-repeat="bgcta in homepageModule.bgcta track by $id($index)")
+							| #[span &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]a(href="{{bgcta.link}}" , data-gtm-espot="{{bgcta.tracking}}")
+						.jade-output-line.jade-indent-4
+							| #[span &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]+pictureTag('00000MOB00000','000000DESK00000','')
+						.jade-output-line.jade-indent-3(ng-repeat="cta in homepageModule.ctas track by $id($index)")
+							| #[span &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]a.jab-cta-invis.sm-l-20.sm-t-60.sm-w-60.sm-h-30(href="{{cta.link}}" , data-gtm-espot="{{cta.tracking}}" , title="{{cta.name}}")
+						.jade-output-line.jade-indent-3
+							| #[span &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]a.jab-hpb-legal.sm-b-1.sm-l-0.sm-w-100.sm-txt-center.legal-bottom-center.sm-txt-white.med-txt-black(data-reveal-id="{{homepageModule.legal}}") Restrictions Apply. &#35;[span See Terms.]
+						.jade-output-line.jade-indent-0
+							| ////// END  {{homepageModule.name}} //////
+						br
+					span(ng-if="homepageModule.columns == 2 && homepageModule.colPosition == 1")
+						.jade-output-line.jade-indent-0
+							| ////// START {{homepageModule.name}} //////
+						.jade-output-line.jade-indent-0
+							| .row.jab-hpb  
+						.jade-output-line.jade-indent-1
+							| #[span &nbsp;&nbsp;].columns.collapse-for-medium-up
+						.jade-output-line.jade-indent-2
+							| #[span &nbsp;&nbsp;&nbsp;&nbsp;]figure.medium-6.columns.sm-m-b-rem-d5.med-m-b-rem-0.collapse
+						.jade-output-line.jade-indent-3
+							| #[span &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]a(href="{{bgcta.link}}" , data-gtm-espot="{{bgcta.tracking}}")
+						.jade-output-line.jade-indent-4   
+							| #[span &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]+pictureTag('00000MOB00000','000000DESK00000','000000ALT00000')
+						.jade-output-line.jade-indent-3(ng-repeat="cta in homepageModule.ctas track by $id($index)")
+							| #[span &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]a.jab-cta-invis.sm-l-20.sm-t-60.sm-w-60.sm-h-30(href="{{cta.link}}" , data-gtm-espot="{{cta.tracking}}" , title="{{cta.name}}")
+						.jade-output-line.jade-indent-3
+							| #[span &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]a.jab-hpb-legal.sm-b-1.sm-l-0.sm-w-100.sm-txt-center.legal-bottom-center.sm-txt-white.med-txt-black(data-reveal-id="{{homepageModule.legal}}") Restrictions Apply. &#35;[span See Terms.]
+					span(ng-if="homepageModule.columns == 2 && homepageModule.colPosition == 2")
+						.jade-output-line.jade-indent-2
+							| #[span &nbsp;&nbsp;&nbsp;&nbsp;]figure.medium-6.columns.collapse
+						.jade-output-line.jade-indent-3
+							| #[span &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]a(href="{{bgcta.link}}" , data-gtm-espot="{{bgcta.tracking}}")
+						.jade-output-line.jade-indent-4
+							| #[span &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]+pictureTag('00000MOB00000','000000DESK00000','000000ALT00000')
+						.jade-output-line.jade-indent-3(ng-repeat="cta in homepageModule.ctas track by $id($index)")
+							| #[span &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]a.jab-cta-invis.sm-l-20.sm-t-60.sm-w-60.sm-h-30(href="{{cta.link}}" , data-gtm-espot="{{cta.tracking}}" , title="{{cta.name}}")
+						.jade-output-line.jade-indent-3
+							| #[span &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;]a.jab-hpb-legal.sm-b-1.sm-l-0.sm-w-100.sm-txt-center.legal-bottom-center.sm-txt-white.med-txt-black(data-reveal-id="{{homepageModule.legal}}") Restrictions Apply. &#35;[span See Terms.]
+						.jade-output-line.jade-indent-0
+							| ////// END  {{homepageModule.name}} //////
+						br
+					span(ng-if="homepageModule.columns == 3")

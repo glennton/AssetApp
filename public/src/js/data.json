@@ -1,0 +1,66 @@
+{
+  "siteAssets" :[
+    {
+      "date"              : "",
+      "day"               : "",
+      "month"             : "",
+      "year"              : "",
+      "uuid"              : "",
+      "notes"             : "",
+      "homepageModules" : [
+        { 
+          "name"          : "",
+          "uuid"          : "",
+          "columns"       : "",
+          "rowPosition"   : "",
+          "colPosition"   : "", 
+          "legal"         : "",
+          "notes"         : "",
+          "bgcta" : [
+            {
+              "link"        : "",
+              "tracking"    : ""
+            }
+          ],  
+          "ctas" : [
+            {
+              "uuid"        : "",
+              "name"        : "",
+              "link"        : "",
+              "tracking"    : ""
+            }
+          ]
+        }
+      ],
+      "flyouts" : [
+        {
+          "uuid"          : "",
+          "name"          : "",
+          "location"      : "",
+          "link"          : "",
+          "tracking"      : ""
+        }
+      ],
+      "globalAs" : [
+        {
+          "uuid"          : "",
+          "name"          : "",
+          "location"      : "",
+          "link"          : "",
+          "tracking"      : ""
+        }
+      ],
+      "globalCs" : [
+        {
+          "uuid"          : "",
+          "name"          : "",
+          "location"      : "",
+          "link"          : "",
+          "tracking"      : "",
+          "legal"         : ""
+        }
+      ]
+    }
+  ]
+}
+

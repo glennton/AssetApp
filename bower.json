@@ -1,0 +1,34 @@
+{
+  "name": "jab-site-assets-dev",
+  "description": "",
+  "main": "gruntfile.js",
+  "authors": [
+    "mw_glenn <glenn.roman@tailoredbrands.com>"
+  ],
+  "license": "ISC",
+  "homepage": "https://github.com/MensWearhouse/tb-digital-dev",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "angular-route": "^1.6.3",
+    "angular-ui-router": "ui-router#^0.4.2",
+    "angular-drag-to-reorder": "^0.0.2",
+    "angular-ui-sortable": "^0.17.0",
+    "angular-uuid": "^0.1.0",
+    "jquery": "^3.2.0",
+    "jquery-ui": "^1.12.1",
+    "angular-animate": "^1.6.3",
+    "foundation-sites": "^6.3.1",
+    "foundation-icon-fonts": "*",
+    "angular-ui": "^0.4.0"
+  },
+  "resolutions": {
+    "angular": "1.6.3"
+  }
+}

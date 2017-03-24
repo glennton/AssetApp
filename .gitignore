@@ -1,0 +1,68 @@
+# Package Folders #
+/bower_components/
+/node_modules/
+*/dist/*
+
+# Compiled source #
+*.com
+*.class
+*.dll
+*.exe
+*.o
+*.so
+
+# Packages #
+*.7z
+*.dmg
+*.gz
+*.iso
+*.jar
+*.rar
+*.tar
+*.zip
+
+# Logs and databases #
+*.log
+*.sql
+*.sqlite
+
+# OS generated files #
+.DS_Store
+.DS_Store?
+.DocumentRevisions-V100
+.fseventsd
+._*
+.Spotlight-V100
+.Trashes
+Icon?
+ehthumbs.db
+Thumbs.db
+.TemporaryItems
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+.DocumentRevisions-V100
+
+# Image Files #
+*.gif
+*.png
+*.jpg
+*.psd
+*.pdf
+*.ai
+
+# Office Files #
+*.xls
+*.xlsx
+*.docx
+*.doc
+*.ppt
+*.pptx
+
+validation-report.json
+validation-status.json
+.sass-cache
+
+# Exceptions #
+!/site/MW/build-system/master/**/assets/*.jpg
+!/site/MW/build-system/master/**/assets/*.png
+!/site/MW/build-system/master/**/assets/*.svg

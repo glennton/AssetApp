@@ -1,0 +1,8 @@
+# Quickstart
+
+```
+bower install
+
+grunt
+
+```

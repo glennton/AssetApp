@@ -1,0 +1,88 @@
+ui-view
+
+//section#main
+  .row.site-asset-links
+      .columns
+        h4 January
+        ul
+          li(ng-repeat="siteAsset in siteData | filter:{month : '01'} track by $id($index)")
+            a.button(ui-sref="main.editor.sites({id:siteAsset.date})" data-reactivation-date="{{siteAsset.date}}" ng-class='{active:assetNavToggles.assetListDate == siteAsset.date}') {{siteAsset.month}} / {{siteAsset.day}}
+        br
+      .columns
+        h4 February
+        ul
+          li(ng-repeat="siteAsset in siteData | filter:{month : '02'} track by $id($index)")
+            a.button(ui-sref="main.editor.sites({id:siteAsset.date})" data-reactivation-date="{{siteAsset.date}}" ng-class='{active:assetNavToggles.assetListDate == siteAsset.date}') {{siteAsset.month}} / {{siteAsset.day}}
+        br
+      .columns
+        h4 March
+        ul
+          li(ng-repeat="siteAsset in siteData | filter:{month : '03'} track by $id($index)")
+            a.button(ui-sref="main.editor.sites({id:siteAsset.date})" data-reactivation-date="{{siteAsset.date}}" ng-class='{active:assetNavToggles.assetListDate == siteAsset.date}') {{siteAsset.month}} / {{siteAsset.day}}
+        br
+      .columns
+        h4 April
+        ul
+          li(ng-repeat="siteAsset in siteData | filter:{month : '04'} track by $id($index)")
+            a.button(ui-sref="main.editor.sites({id:siteAsset.date})" data-reactivation-date="{{siteAsset.date}}" ng-class='{active:assetNavToggles.assetListDate == siteAsset.date}') {{siteAsset.month}} / {{siteAsset.day}}
+        br
+      .columns
+        h4 May
+        ul
+          li(ng-repeat="siteAsset in siteData | filter:{month : '05'} track by $id($index)")
+            a.button(ui-sref="main.editor.sites({id:siteAsset.date})" data-reactivation-date="{{siteAsset.date}}" ng-class='{active:assetNavToggles.assetListDate == siteAsset.date}') {{siteAsset.month}} / {{siteAsset.day}}
+        br
+      .columns
+        h4 June
+        ul
+          li(ng-repeat="siteAsset in siteData | filter:{month : '06'} track by $id($index)")
+            a.button(ui-sref="main.editor.sites({id:siteAsset.date})" data-reactivation-date="{{siteAsset.date}}" ng-class='{active:assetNavToggles.assetListDate == siteAsset.date}') {{siteAsset.month}} / {{siteAsset.day}}
+        br
+      .columns
+        h4 July
+        ul
+          li(ng-repeat="siteAsset in siteData | filter:{month : '07'} track by $id($index)")
+            a.button(ui-sref="main.editor.sites({id:siteAsset.date})" data-reactivation-date="{{siteAsset.date}}" ng-class='{active:assetNavToggles.assetListDate == siteAsset.date}') {{siteAsset.month}} / {{siteAsset.day}}
+        br
+      .columns
+        h4 August
+        ul
+          li(ng-repeat="siteAsset in siteData | filter:{month : '08} track by $id($index)")
+            a.button(ui-sref="main.editor.sites({id:siteAsset.date})" data-reactivation-date="{{siteAsset.date}}" ng-class='{active:assetNavToggles.assetListDate == siteAsset.date}') {{siteAsset.month}} / {{siteAsset.day}}
+        br
+      .columns
+        h4 September
+        ul
+          li(ng-repeat="siteAsset in siteData | filter:{month : '09'} track by $id($index)")
+            a.button(ui-sref="main.editor.sites({id:siteAsset.date})" data-reactivation-date="{{siteAsset.date}}" ng-class='{active:assetNavToggles.assetListDate == siteAsset.date}') {{siteAsset.month}} / {{siteAsset.day}}
+        br
+      .columns
+        h4 October
+        ul
+          li(ng-repeat="siteAsset in siteData | filter:{month : '10'} track by $id($index)")
+            a.button(ui-sref="main.editor.sites({id:siteAsset.date})" data-reactivation-date="{{siteAsset.date}}" ng-class='{active:assetNavToggles.assetListDate == siteAsset.date}') {{siteAsset.month}} / {{siteAsset.day}}
+        br
+      .columns
+        h4 November
+        ul
+          li(ng-repeat="siteAsset in siteData | filter:{month : '11'} track by $id($index)")
+            a.button(ui-sref="main.editor.sites({id:siteAsset.date})" data-reactivation-date="{{siteAsset.date}}" ng-class='{active:assetNavToggles.assetListDate == siteAsset.date}') {{siteAsset.month}} / {{siteAsset.day}}
+        br
+      .columns
+        h4 December
+        ul
+          li(ng-repeat="siteAsset in siteData | filter:{month : '12'} track by $id($index)")
+            a.button(ui-sref="main.editor.sites({id:siteAsset.date})" data-reactivation-date="{{siteAsset.date}}" ng-class='{active:assetNavToggles.assetListDate == siteAsset.date}') {{siteAsset.month}} / {{siteAsset.day}}
+
+
+
+
+
+
+
+
+
+
+
+
+
