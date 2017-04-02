@@ -1,0 +1,506 @@
+@import 'mixins'
+
+.col-info-container-inner.reactivationAsset
+  background: $reactivationBg !important
+
+section#site-asset-container
+  background: rgb(0, 121, 191)
+  .site-asset-container-inner
+    padding: 2rem 0 20rem
+    .module-container
+      .line-item
+        .col-info-container-inner
+          padding-top: 1rem
+          padding-bottom: 0rem
+          .col-info-box
+            .row
+              .card
+                width: 100%
+                padding-top: .3rem
+                padding-bottom: .3rem
+              .line-item-title
+                input
+                  //font-size: .7rem
+                  //border-bottom: 1px solid #ddd
+              textarea
+                border-top: 1px solid $darkBlue
+      .line-item.modules-flyouts
+        .col-info-container-inner
+          .col-info-box
+            .row
+              .line-item-title 
+                input
+                  font-size: 0.6rem
+                  border-bottom: 0
+              .flyout-location-list
+                span
+                  display: inline-block
+                  width: 9.06%
+                  a.button
+                    background-color: transparent
+                    padding: 0.65em 1em
+                    font-size: 0.7rem
+                    color: #fff
+                    width: 100%
+                    margin-bottom: 0
+                    border-top: 1px solid $darkBlue
+                    border-bottom: 1px solid $darkBlue
+                    border-left: 1px solid $darkBlue
+                    &:hover
+                      background: $lightBlue
+                      color: #fff
+                  &:last-child
+                    a
+                      border-right: 1px solid $darkBlue
+                  &.active
+                    a.button
+                      color: $midBlue
+                      background-color: #ddd
+      .modules-info
+        .col-info-title
+          margin-bottom: .5rem
+        .calendar-container
+          margin-bottom: .5rem
+        .change-notes
+          min-height: 100px
+          pre
+            font-size: 0.8rem
+            font-family: Helvetica Neue,Helvetica,Roboto,Arial,sans-serif
+            font-weight: 400
+            min-height: 90px
+            &:hover
+              cursor: pointer
+              color: $midBlue
+          p
+            font-size: 0.8rem
+          textarea
+            margin-bottom: .5rem
+            display: none
+            font-size: .8rem
+            min-height: 100px
+            padding: 1rem 1rem
+            &:hover
+              background-color: #fff !important
+            &:active, &:focus
+              color: #000 !important
+              background-color: #fff !important
+          .button
+            float: right  
+            display: none 
+          &.editing-mode
+            p,pre
+              display: none
+            textarea,.button
+              display: block
+
+        .change-reactivation
+          i 
+            margin-left: 5px
+          .button
+            width: 100%
+            margin-bottom: .5rem
+            display: none
+            i
+              display: none
+            &.selected
+              display: block
+              background-color: $activeBg
+              i
+                display: inline
+            &:hover
+              i
+                display: inline !important
+          &:hover
+            a.button 
+              display: block
+              i
+                display: none
+      .col-info-title h4
+        font-size: 1rem
+        margin-bottom: 0.1rem
+        opacity: .8
+      .col-info-container-inner
+        background: $darkBlue
+        border-radius: 5px
+        padding: 1% 2%
+        &.moduleReactivation
+          background: $reactivationBg
+      .col-info-container
+        position: relative
+        margin-bottom: 1rem
+        border: 0
+        border-radius: 5px
+        box-shadow: none
+        overflow: hidden
+        color: #0a0a0a
+        .col-info-delete
+          display: none
+        &:hover
+          .col-info-delete
+            display: block
+        //NAME
+        .col-info-name
+          margin-bottom: 1%
+          input
+            font-size: 1rem
+        //CTAS
+        .card
+          overflow: visible
+          background: $midBlue
+          display: inline-block
+          margin-right: 1%
+          vertical-align: top
+          .col-info-box
+            font-size: 1.5rem
+            float: left
+            font-size: .4rem
+            width: 100%
+            position: relative
+            .bg-cta-label
+              display: none
+            &.col-info-add
+              font-size: 1rem
+              a
+                display: block
+                width: 100%
+                font-size: .8rem
+              input
+                font-size: .8rem
+                font-weight: 700
+                color: $lightBlue
+                position: absolute
+                right: 0
+                top: 0
+                height: 100%
+                width: 50px
+                text-align: center
+                border: none
+                background: #eee
+                font-family: Helvetica Neue,Helvetica,Roboto,Arial,sans-serif
+            .col-info-delete
+              font-size: 1.5rem
+              position: absolute
+              top: -10px
+              right: -10px
+              i
+                color: #fff
+                &:hover
+                  color: $lightRed
+        &.medium-12
+          .col-info-container-inner
+            padding: 1% 2%
+          .card
+            width: 32.4%
+            .col-info-box
+              padding: 2% 5%
+              margin-right: 1%
+          .col-info-legal
+            .col-info-box
+              padding: 1% .9%
+              textarea
+                padding-bottom: 1%
+
+          .card:nth-child(3n+0) 
+            margin-right: 0%
+        &.medium-6
+          .col-info-container-inner
+            padding: 1.9% 4.1%
+          .card
+            width: 100%
+            .col-info-box
+              padding: .7rem 2.3%
+              margin-right: 2.3%
+          .col-info-legal
+            .col-info-box
+              padding: 2% 2%
+              textarea
+                padding-bottom: 6%
+            .col-info-box:nth-child(2n+0) 
+              margin-right: 0%
+        &.medium-4
+          .col-info-container-inner
+            padding: 3.4% 6%
+          .card
+            width: 100%
+            .col-info-box
+              padding: .7rem 3%
+              margin-right: 3%
+          .col-info-legal
+            .col-info-box
+              padding: 5% 3.1%
+              textarea
+                padding-bottom: 14%
+        //LEGAL
+        .col-info-legal
+          margin-bottom: 1rem
+          .card
+            margin-bottom: 0%
+            width: 100%
+            textarea
+              resize: none
+              min-height: 0
+              overflow: hidden
+              &:focus
+                background: $lightRed !important
+        //OPTIONS
+        .col-info-options  
+          margin-bottom: 1rem
+          .col-setter
+            float: left
+            font-size: 0
+            a 
+              color: #fff
+              font-size: .75rem
+          .button
+            margin-bottom: 0
+            margin-right: .1rem
+            background: $lightBlue
+            &:hover
+              background: $darkerBlue
+              cursor: pointer
+              color: #fff
+            &.active
+              background: $activeBg
+          .btn-delete-module   
+            float: right
+            &:hover
+              background: $lightRed
+        .col-info-misc    
+          a
+            font-size: 0.7rem
+            opacity: .55
+            &:hover
+              opacity: 1
+.sort-site-assets
+  .col-info-cta , .col-info-legal , .col-info-create-cta  
+    display: none !important
+  .btn-table
+    display: none !important
+  .btn-sort
+    background-color: #fff !important
+    color: #000 !important
+
+@media only screen and (min-width: 40.063em) 
+  #workarea
+    .module-container
+      .col-info-container
+        &.medium-12
+          .card
+            padding: 0 1%
+            .col-info-box
+              width: 24.2%
+              padding: .7rem 1%
+              margin-right: 1%
+            .col-info-box:nth-child(4n+0) 
+              margin-right: 0%
+        &.medium-6
+          .card
+            padding: 0 2.3%
+            .col-info-box
+              width: 48.8%
+              padding: .7rem 2.3%
+              margin-right: 2.3%
+            .col-info-box:nth-child(2n+0) 
+              margin-right: 0%
+        &.medium-4
+          .card
+            padding: 0  3%
+            .col-info-box
+              width: 99.6%
+              padding: .7rem 3%
+              margin-right: 3%
+        .col-info-name
+          border: 0
+        .card
+          background: #eee
+          .col-info-box
+            background: #ddd
+            margin-bottom: .8rem
+            border-bottom: 0
+            .col-info-delete
+              font-size: 1rem
+              top: 5px
+              right: 5px
+              margin-top: 0
+
+
+section#site-asset-container.table-site-assets
+  .btn-sort
+    display: none !important
+  .btn-table
+    background-color: #fff !important
+    color: #000 !important
+  .modules-homepage, .modules-flyouts, .modules-global-a, .modules-global-c
+    margin-bottom: 1rem
+  .site-asset-editor-left
+    left: 0 !important
+    width: 100% !important
+  .site-asset-container-inner
+    .module-container
+      .col-info-container-inner
+        border-radius: 0px
+        border-bottom: 2px solid $lightBlue
+        .col-info-cta
+          margin-bottom: .5rem
+      .col-info-container
+        width: 100%
+        margin-bottom: 0px
+        .col-info-name
+          margin-bottom: 0
+          width: 99%
+          border-bottom: 1px solid #026AA7
+          input
+            font-size: 0.7rem
+            font-weight: 600
+            color: #fff
+        //CTAS
+        .card
+          margin-bottom: 0
+          border-top: 0
+          border-left: 1px solid #026AA7
+          border-right: 0
+          padding-right: 1%
+          background-color: transparent
+          .col-info-box
+            clear: both
+            padding: 0
+            input
+              width: 25%
+              padding-left: 1%
+              float: left
+              border-bottom: 1px solid #026AA7
+              border-right: 1px solid #026AA7
+              color: #fff
+            &.col-info-add
+              max-width: 200px
+              background: #ddd
+              padding: 0.2% 1%
+              float: right
+              margin-right: 0           
+            .col-info-delete
+              font-size: 1.5rem
+              position: absolute
+              top: 50%
+              margin-top: -12px
+              right: -2%       
+              i
+                color: #fff !important  
+          .col-info-box.col-info-box-bg
+            .bg-cta-label
+              width: 25%
+              float: left
+              display: block
+              p
+                padding: 0.55rem 0.7rem
+                margin: 0
+                line-height: 1.15
+                border-bottom: 1px solid #026AA7
+                border-right: 1px solid #026AA7
+                color: #fff
+        &.medium-12
+          .col-info-container-inner
+            padding: 0.5% 2%
+          .card
+            width: 100%
+        &.medium-6
+          .col-info-container-inner
+            padding: 0.5% 2%
+          .card
+            width: 100%
+        &.medium-4
+          .col-info-container-inner
+            padding: 0.5% 2%
+          .card
+            width: 100%
+        //LEGAL
+        .col-info-legal
+          float: left
+          width: 68% !important
+          margin-bottom: 0
+          background-color: transparent
+          .card
+            border-bottom: 0
+            border-left: 0
+            padding-right: 0
+            textarea
+              padding-top: 0
+              padding-bottom: 0
+              min-height: 0
+              background-color: transparent
+              color: #fff
+        .col-info-create-cta  
+          float: right
+          width: 20% !important
+          margin-right: 2%
+          .card
+            width: 100%
+            border: 0
+            input
+              border: 0
+              background-color: #fff
+            .col-info-box.col-info-box
+              padding: 4.1% 8.6%
+        //OPTIONS
+        .col-info-options
+          float: right
+          width: 9% !important
+          margin-right: 1%
+          margin-bottom: 0
+          border-right: 0
+          .col-setter
+            display: none  
+        .col-info-misc    
+          display: none        
+
+  .line-item
+    border: 0
+    .col-info-container
+      .card
+        padding: 0 1%
+        .col-info-box
+          width: 100%
+          padding: .7rem 1%
+          margin-right: 1%
+      .col-info-name
+        border: 0
+      .card
+        padding: 0
+        border-left: 0 !important
+        .col-info-box
+          background-color: transparent
+          margin-bottom: .8rem
+          border-bottom: 0
+          .col-info-delete
+            font-size: 1rem
+            top: 5px
+            right: 5px
+            margin-top: 0
+          .columns
+            width: 33.2%
+            border-bottom: 1px solid $midBlue
+            border-top: 1px solid $midBlue
+            padding: 0
+            input,textarea
+              width: 100%
+              padding-left: 3%
+              border: 0
+          .flyout-location-list
+            width: 100%
+            padding: 0
+            border: 0
+          .small-12
+            width: 100%
+            padding: 0
+            border-top: 0
+          .columns:nth-child(3n+0) 
+            border-right: 1px solid $midBlue
+          .columns.line-item-title
+            padding-left: 0
+            border-left: 1px solid $midBlue
+            input
+              padding-left: 1%
+              border-bottom: 0
+
+
+
+

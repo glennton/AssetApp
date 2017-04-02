@@ -1,0 +1,59 @@
+section
+  #site-new-container
+    .row
+      .columns.small-3.module-container
+        .row.site-new-main-options
+          .columns
+            .col-info-container-inner(ng-class="{bgerror:dupeCheck.url == true}")
+              p(ng-show="datePicker.status") #[i.hdr-icon.fi-calendar] Choose Date Range
+              .row
+                .columnst.text-center
+                  p.new-review-dates(ng-hide="datePicker.status")  
+                    span Starts On
+                    | &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    span Ends On
+                  p.new-review-dates(ng-hide="datePicker.status")  
+                    span {{newAssetVars.month}} &#47; {{newAssetVars.day}}
+                    span(ng-show="newAssetVars.type") 
+                    | &nbsp;&nbsp;&nbsp;#[i.fi-arrow-right]&nbsp;&nbsp;&nbsp;
+                    span {{newAssetVars.endMonth}} &#47; {{newAssetVars.endDay}} 
+                    span(ng-show="newAssetVars.type")
+                  div.new-review-type(ng-hide="datePicker.status")
+                    p(ng-show="newAssetVars.type == 'RA'") Reactivation From {{reactivationVars.month}} &#47; {{reactivationVars.day}}
+                      span(ng-hide="newAssetVars.date === null")
+                    p(ng-show="newAssetVars.type == 'LP'") Landing Page
+                    p(ng-show="newAssetVars.type == 'SA'") Site Asset
+              .row.new-asset-save-pick-date
+                .columns
+                  btn-date-range-picker
+              .row.new-asset-save(ng-hide="datePicker.status")
+                .columns
+                  .row(ng-show="dupeCheck.url")
+                    .columns
+                      p Start date selected is already used. Please change date or update asset type.
+                  .row(ng-hide="dupeCheck.url")
+                    .columns.small-6
+                      a.button.cancel-btn(ng-click="cancelNewAssetMode()") Cancel
+                    .columns.small-6
+                      a.button.confirm-btn(ng-click="saveNewSiteAsset()") Create
+
+        .row.site-new-secondary-options(ng-hide="datePicker.status")
+          .columns
+            .col-info-container-inner
+              p #[i.hdr-icon.fi-widget] Creation Methods:
+              a.button(ng-click="newAssetMode('')" ng-class="{active:newSiteMode.currentMode == ''}") From Blank #[i.btn-icon.fi-check]
+              a.button(ng-click="newAssetMode('reactivation')" ng-class="{active:newSiteMode.currentMode == 'reactivation'}") From Reactivation #[i.btn-icon.fi-check]
+              a.button(ng-click="newAssetMode('template')" ng-class="{active:newSiteMode.currentMode == 'template'}") From Template #[i.btn-icon.fi-check]
+        .row.site-new-secondary-options(ng-hide="datePicker.status")
+          .columns
+            .col-info-container-inner
+              p #[i.hdr-icon.fi-page-multiple] Choose Asset Type
+              a.button(ng-click="setAssetType('SA')" ng-class="{active:newAssetVars.type == 'SA'}") New Site Asset (SA) #[i.btn-icon.fi-check]
+              a.button(ng-click="setAssetType('LP')" ng-class="{active:newAssetVars.type == 'LP'}") Landing Page (LP) #[i.btn-icon.fi-check]
+              a.button(ng-click="setAssetType('RA')" ng-class="{active:newAssetVars.type == 'RA'}") Reactivation (RA) #[i.btn-icon.fi-check]
+      .columns.small-9
+        .row
+          .columns
+            section#reactivation-nav-container(ui-view="reactivationNavView" ng-show="reactivationVars.mode == 'reactivation'")  
+
+            section#reactivation-asset-container(ui-view="reactivationView" ng-show="reactivationVars.mode == 'reactivation'")

@@ -1,26 +1,62 @@
+@import 'mixins'
 #site-new-container
-  background-color: #005485
+  background-color: $darkBlue
   min-height: 500px
-  .new-container-inner
-    padding-top: 2rem
-    padding-bottom: 2rem
-    .new-navigation-container
-    .new-from-reactivation-container
-      ul.reactivation-date-list
-        margin: 0
-        li
-          list-style-type: none
-          display: inline-block
-          a
-            display: inline-block
-            border-right: 1px solid #005485
-            border-left: 1px solid #005485
-    .new-from-reactivation-preview
-      .reactivation-modules
-        a
+  padding-top: 2rem
+  padding-bottom: 100px
+  .module-container
+    i.btn-icon
+      font-size: .8rem
+      margin-left: .3rem
+      display: none
+    .active
+      i
+        display: inline
+    i.hdr-icon
+      font-size: 1.2rem
+      margin-right: .3rem
+      margin-left: 0
+    .new-review-dates
+      font-weight: 600
+    .new-review-type   
+
+    .new-asset-save-pick-date
+      input
+        height: 0 
+        overflow: hidden
+        border: 0
+        padding: 0
+    .site-new-main-options
+      .col-info-container-inner
+        background: $darkerBlue
+        .new-asset-save
+          border-top: 1px solid $darkBlue
+          padding-top: 1rem
+        .button
           width: 100%
-          background: #003e63
+          background: $lightBlue
+    .site-new-secondary-options
+      a.button
+        display: none
+      a.button.active
+        display: inline-block
+      &:hover
+        a.button
+          display: inline-block
+    .col-info-title h4
+      font-size: 1rem
+      margin-bottom: 0.1rem
+      opacity: .8
+    .col-info-container-inner
+      background: $darkerBlue
+      border-radius: 5px
+      padding: 6% 8%
+      margin-bottom: 1rem
+      .button
+        width: 100%
+        background: $darkBlue
+        &.active
+          background: $midBlue
+          color: #fff
 
 
-
-    

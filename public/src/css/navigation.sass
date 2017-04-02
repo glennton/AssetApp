@@ -1,0 +1,87 @@
+@import 'mixins'
+.site-asset-editor-right
+  nav#site-asset-nav
+    .button
+      margin-bottom: .3rem
+      width: 100%
+      text-align: left
+    .add-hp-module
+      position: relative
+      a
+        color: #fff
+        transition: all 0.5s ease
+      input
+        display: none
+        font-size: 0.8rem
+        font-weight: 700
+        color: $lightBlue
+        position: absolute
+        right: 0
+        top: 0
+        height: 100%
+        width: 30px
+        text-align: center
+        border: none
+        background: #eee
+        font-family: Helvetica Neue, Helvetica, Roboto, Arial, sans-serif
+    &:hover
+      .add-hp-module
+        a
+          padding-right: 30px
+          transition: all 0.5s ease
+        input
+          display: block
+section#site-asset-container.table-site-assets
+  .site-asset-editor-right
+    nav#site-asset-nav
+      max-height: 100px
+      position: fixed
+      z-index: 999
+      bottom: 0 !important
+      left: 0
+      width: 100%
+      text-align: center
+      padding-top: 50px
+      background: -moz-linear-gradient(top, rgba(0,0,0,0) 0%, rgba(0,0,0,0.65) 100%)
+      background: -webkit-linear-gradient(top, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%)
+      background: linear-gradient(to bottom, rgba(0,0,0,0) 0%,rgba(0,0,0,0.65) 100%)
+      filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00000000', endColorstr='#a6000000',GradientType=0 )
+      br
+        display: none
+      .button
+        margin-bottom: 0
+        width: auto
+        display: inline-block
+        font-size: .8rem
+        -webkit-box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75)
+        -moz-box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75)
+        box-shadow: 0px 0px 9px 0px rgba(0,0,0,0.75)
+      &:hover
+        .add-hp-module
+          a
+            padding-right: 0px
+          input
+            display: none
+
+
+.site-asset-links
+  position: relative
+  z-index: 999
+  padding-top: 1rem
+  ul
+    margin: 0 0 .5rem 0
+    display: block
+    font-size: 0
+    li
+      display: inline-block
+      margin-right: .5rem
+      a.button
+        display: inline-block
+        margin-bottom: 0
+        background: $midBlue
+        border: 1px solid $lightBlue
+        &:hover
+          background: #97c6e6
+          cursor: pointer
+        &.active
+          background-color: $lightBlue

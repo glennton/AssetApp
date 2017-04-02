@@ -1,19 +1,42 @@
-section#info
-  .row
-    .columns.collapse(data-sticky-container="")
-      .columns.sticky(data-sticky data-margin-top="0" data-top-anchor="main-content-anchor")
-        nav(role="navigation" ng-class="{inactiveBtn : currentAsset.editingMode}")
-          btn-new-asset
-          btn-get-code
+div
+  section#main-content-anchor
+  section#site-main-container(ng-if="siteAssetVars.page == 'editor'")
+    .row
+      .columns
+        p Recent Site Assets
+        br
+        br
+        br
+        br
+    .row.site-main-asset-list
+      .columns
+        p 2017 Site Assets
+        .site-main-asset-legend
+          span.typeSiteAsset #[i.fi-page-filled] Site Asset &nbsp;&nbsp;&nbsp;&nbsp;
+          span.typeReactivation #[i.fi-page-filled] Reactivation &nbsp;&nbsp;&nbsp;&nbsp;
+          span.typeLandingPage #[i.fi-page-filled] Landing Page
+          br
+          br
+        .row
+          .columns.small-1(ng-repeat='mo in months track by $id($index)')
+            p {{mo.month}}
+            ul
+              li(ng-repeat="siteAsset in siteData | filter:{month : mo.date} track by $id($index)" ) 
+                a(ui-sref="main.editor.sites({id:siteAsset.url})" ng-class="::assetTypeClass(siteAsset.type)") {{siteAsset.month}} / {{siteAsset.day}}
 
-asset-list-nav(ng-class="{inactiveBtn : currentAsset.editingMode}")
-
-section#main-content-anchor
-section#site-jade-container(ui-view="jadeAssetView")
-section#site-reactivation-container(ui-view="reactivationAssetView" ng-show="currentAsset.currentMode == 'reactivation'")
-section#site-new-container(ui-view="newSiteAssetView" ng-show="btnToggles.newSiteAssetBtn")
-section#site-asset-container.sort-site-assets2(ui-view="siteAssetView" ng-show="currentAsset.currentAssetDate")
-
-
-
+  section#site-reactivation-container(ng-if="siteAssetVars.page == 'assets'" ng-show="reactivationVars.mode == 'reactivation'")
+    .row
+      .columns.small-3
+        section#reactivation-add-menu-container(ui-view="reactivationMenuAddMenu")
+      .columns.small-9.reactivation-box.reactivation-choose-asset
+        .row
+          .columns
+            .row
+              .columns.small-12
+                section#reactivation-nav-container(ui-view="reactivationNavView") 
+                section#reactivation-asset-container(ui-view="reactivationView")
+                    
+  section#site-asset-nav-container(ui-view="siteAssetNavView" ng-show="siteAssetVars.page == 'asset'")                   
+  section#site-asset-container(ui-view="siteAssetView" ng-show="siteAssetVars.page == 'asset'")
+  ui-view
 

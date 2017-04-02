@@ -1,0 +1,83 @@
+section
+  #site-new-container
+    .row
+      .columns.small-3.module-container
+        .row.site-new-main-options
+          .columns
+            .col-info-container-inner(ng-class="{bgerror:dateCheck == true}")
+              p #[i.hdr-icon.fi-calendar] Choose Date Range
+              .row
+                .columnst.text-center
+                  p.new-review-dates(ng-hide="datePicker.status")  
+                    span {{newAssetDate.start.month}} &#47; {{newAssetDate.start.day}}
+                    span(ng-show="newSiteModel.type") 
+                    | &nbsp;&nbsp;&nbsp;#[i.fi-arrow-right]&nbsp;&nbsp;&nbsp;
+                    span {{newAssetDate.end.month}} &#47; {{newAssetDate.end.day}} 
+                    span(ng-show="newSiteModel.type")
+                  div.new-review-type(ng-hide="datePicker.status")
+                    p(ng-show="newSiteModel.type == 'RA'") Type: Reactivation 
+                      span(ng-hide="reactivationVars.date === null"){{reactivationVars.date | slice:0:2}} / {{reactivationVars.date | slice:2:4}}
+                    p(ng-show="newSiteModel.type == 'LP'") Type: Landing Page
+                    p(ng-show="newSiteModel.type == 'SA'") Type: Site Asset
+              .row.new-asset-save-pick-date
+                .columns
+                  btn-date-range-picker
+              .row.new-asset-save(ng-hide="datePicker.status")
+                .columns
+                  .row(ng-show="dateCheck")
+                    .columns
+                      p Start date selected is already used. Please change date or update asset type.
+                  .row(ng-hide="dateCheck")
+                    .columns.small-6
+                      a.button.cancel-btn(ng-click="cancelNewAssetMode()") Cancel
+                    .columns.small-6
+                      a.button.confirm-btn(ng-click="saveNewSiteAsset()") Create
+
+        .row.site-new-secondary-options(ng-hide="datePicker.status")
+          .columns
+            .col-info-container-inner
+              p #[i.hdr-icon.fi-page-multiple] Choose Asset Type
+              a.button(ng-click="setAssetType('')" ng-class="{active:newSiteModel.type == 'SA'}") New Site Asset (SA) #[i.btn-icon.fi-check]
+              a.button(ng-click="setAssetType('LP')" ng-class="{active:newSiteModel.type == 'LP'}") Landing Page (LP) #[i.btn-icon.fi-check]
+              a.button(ng-click="setAssetType('RA')" ng-class="{active:newSiteModel.type == 'RA'}") Reactivation (RA) #[i.btn-icon.fi-check]
+        .row.site-new-secondary-options(ng-hide="datePicker.status")
+          .columns
+            .col-info-container-inner
+              p #[i.hdr-icon.fi-widget] Creation Methods:
+              a.button(ng-click="newAssetMode('')" ng-class="{active:newSiteMode.currentMode == ''}") From Blank #[i.btn-icon.fi-check]
+              a.button(ng-click="newAssetMode('reactivation')" ng-class="{active:newSiteMode.currentMode == 'reactivation'}") From Reactivation #[i.btn-icon.fi-check]
+              a.button(ng-click="newAssetMode('template')" ng-class="{active:newSiteMode.currentMode == 'template'}") From Template #[i.btn-icon.fi-check]
+      .columns.small-9.module-container
+        .columns.site-reactivation-inner(ng-show="newSiteMode.currentMode == 'reactivation'")
+          .row
+            .columns.reactivation-box.reactivation-choose-date
+              section#reactivation-nav-container(ui-view="reactivationNavView")     
+              cancel-mode   
+          section#reactivation-asset-container(ui-view="reactivationView")     
+          .row(ng-repeat="siteAsset in siteData | filter:{date :reactivationVars.date } track by $index")
+            .columns.small-12.reactivation-box.reactivation-choose-asset
+              .row
+                .columns.small-6.collapse
+                  h4 Homepage Banners
+                  .columns.reactivation-box-inner
+                    .reactivation-modules(ng-repeat="homepageModule in siteAsset.homepageModules track by $index")
+                      a.button.choose-reactivation-assets(data-asset-type="homepageModules"  data-asset-uuid="{{homepageModule.uuid}}" data-asset-date="{{siteAsset.date}}") {{homepageModule.name}}
+                .columns.small-6.collapse
+                  h4 Top Nav Flyouts
+                  .columns.reactivation-box-inner
+                    .reactivation-modules(ng-repeat="flyout in siteAsset.flyouts track by $index"  data-uuid="{{flyout.uuid}}")
+                      a.button.choose-reactivation-assets( data-asset-type="flyouts"  data-asset-uuid="{{flyout.uuid}}" data-asset-date="{{siteAsset.date}}") {{flyout.name}}
+              .row        
+                .columns.small-12.collapse
+                  .row
+                    .columns.small-6.collapse
+
+                      h4 Global C Drop Down
+                      .columns.reactivation-box-inner
+                        .reactivation-modules(ng-repeat="glblc in siteAsset.globalCs track by $index"  data-uuid="{{glblc.uuid}}")
+                          a.button.choose-reactivation-assets( data-asset-type="globalCs"  data-asset-uuid="{{glblc.uuid}}" data-asset-date="{{siteAsset.date}}") {{glblc.name}}
+                    .columns.small-6.collapse
+                      h4 Global A Rotate
+                      .columns.reactivation-box-inner
+                        .reactivation-modules(ng-repeat="glbla in siteAsset.globalAs track by $index"  data-uuid="{{flyout.uuid}}")
+                          a.button.choose-reactivation-assets( data-asset-type="globalAs"  data-asset-uuid="{{glbla.uuid}}" data-asset-date="{{siteAsset.date}}") {{glbla.name}}

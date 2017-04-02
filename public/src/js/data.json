@@ -2,9 +2,11 @@
   "siteAssets" :[
     {
       "date"              : "",
+      "type"              : "",
       "day"               : "",
       "month"             : "",
       "year"              : "",
+      "endDate"           : "",
       "uuid"              : "",
       "notes"             : "",
       "homepageModules" : [
@@ -16,12 +18,11 @@
           "colPosition"   : "", 
           "legal"         : "",
           "notes"         : "",
-          "bgcta" : [
-            {
+          "bgcta" : {
               "link"        : "",
               "tracking"    : ""
-            }
-          ],  
+            
+          },  
           "ctas" : [
             {
               "uuid"        : "",

@@ -1,0 +1,9 @@
+.row.site-asset-links
+    .columns
+      ul.asset-list-months
+        li(ng-repeat='month in months track by $id($index)')
+          a.button(data-asset-month='month.date' ng-class='{active:siteAssetVars.month == month.date}' ng-click="setSiteAssetVars([{'month':month.date}])") {{month.month}}
+    .columns
+      ul
+        li(ng-repeat="siteAsset in siteData | filter:{month : siteAssetVars.month} track by $id($index)" )
+          a.button(ui-sref="main.editor.sites({id:siteAsset.url})" ng-click="setSiteAssetVars([{'date':siteAsset.date},{'uuid':siteAsset.uuid},{'url':siteAsset.url}])" ng-class='{active:siteAssetVars.uuid == siteAsset.uuid}') {{siteAsset.month}} / {{siteAsset.day}} #[span(ng-show="siteAsset.type == 'LP'") LP]#[span(ng-show="siteAsset.type == 'RA'") RA]

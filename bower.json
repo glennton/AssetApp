@@ -18,7 +18,6 @@
   "dependencies": {
     "angular-route": "^1.6.3",
     "angular-ui-router": "ui-router#^0.4.2",
-    "angular-drag-to-reorder": "^0.0.2",
     "angular-ui-sortable": "^0.17.0",
     "angular-uuid": "^0.1.0",
     "jquery": "^3.2.0",
@@ -26,9 +25,16 @@
     "angular-animate": "^1.6.3",
     "foundation-sites": "^6.3.1",
     "foundation-icon-fonts": "*",
-    "angular-ui": "^0.4.0"
+    "angular-material": "^1.1.3",
+    "angular-daterangepicker": "^0.2.2",
+    "moment": "momentjs#^2.18.1",
+    "bootstrap-daterangepicker": "^2.1.25"
   },
   "resolutions": {
     "angular": "1.6.3"
+  },
+  "devDependencies": {
+    "ng-sticky-element": "^0.1.0",
+    "angular-material": "^1.1.3"
   }
 }

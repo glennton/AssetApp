@@ -1,0 +1,33 @@
+.reactivation-box.reactivation-final-check(afkl-sticky-element)
+  .columns.reactivation-box-inner(ng-class="{bgerror:reactivationVars.url === siteAssetVars.url}")
+    .row
+      .columns
+        p
+          i.fi-checkbox
+          |  &nbsp;Review Selections
+    .row(ng-repeat="siteAsset in siteData | uuidFilter:reactivationVars.uuid track by $index")
+      .columns.text-center
+        span.reactivation-old.reactivation-final-date {{reactivationVars.date | slice:0:2}} / {{reactivationVars.date  | slice:2:4}}
+        br
+        i(class="fi-arrow-down large")
+        br
+        span.reactivation-new.reactivation-final-date {{siteAssetVars.date | slice:0:2}} / {{siteAssetVars.date | slice:2:4}}
+        br
+        br
+    .row(ng-repeat="siteAsset in siteData | uuidFilter:reactivationVars.uuid track by $index" ng-hide="siteAssetVars.date == reactivationVars.date")
+      .columns
+        .row.confirmation-btns(ng-show="reactivationVars.date == siteAsset.date")
+          .columns.text-center
+            add-reactivation-assets
+    .row.confirmation-empty(ng-hide="reactivationVars.date")
+      .columns
+        p 
+          i.fi-info
+          |  &nbsp;Please choose reactivaiton date asset on the right.
+    .row.error-msg(ng-show="reactivationVars.url === siteAssetVars.url")
+      .columns
+        p 
+          i.fi-info
+          |  &nbsp;From and To dates must be different.
+.reactivation-box        
+  a(class="button cancel-btn" ng-click="cancelReactivationMode()") Cancel

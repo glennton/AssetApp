@@ -1,0 +1,26 @@
+.row(ng-repeat="siteAsset in siteData | filter:{date :reactivationVars.date } track by $index")
+  .columns.small-12.reactivation-box.reactivation-choose-asset
+    .row
+      .columns.small-6.collapse
+        h4 Homepage Banners
+        .columns.reactivation-box-inner
+          .reactivation-modules(ng-repeat="homepageModule in siteAsset.homepageModules track by $index")
+            a.button.choose-reactivation-assets(data-asset-type="homepageModules"  data-asset-uuid="{{homepageModule.uuid}}" data-asset-date="{{siteAsset.date}}") {{homepageModule.name}}
+      .columns.small-6.collapse
+        h4 Top Nav Flyouts
+        .columns.reactivation-box-inner
+          .reactivation-modules(ng-repeat="flyout in siteAsset.flyouts track by $index"  data-uuid="{{flyout.uuid}}")
+            a.button.choose-reactivation-assets( data-asset-type="flyouts"  data-asset-uuid="{{flyout.uuid}}" data-asset-date="{{siteAsset.date}}") {{flyout.name}}
+    .row        
+      .columns.small-12.collapse
+        .row
+          .columns.small-6.collapse
+            h4 Global C Drop Down
+            .columns.reactivation-box-inner
+              .reactivation-modules(ng-repeat="glblc in siteAsset.globalCs track by $index"  data-uuid="{{glblc.uuid}}")
+                a.button.choose-reactivation-assets( data-asset-type="globalCs"  data-asset-uuid="{{glblc.uuid}}" data-asset-date="{{siteAsset.date}}") {{glblc.name}}
+          .columns.small-6.collapse
+            h4 Global A Rotate
+            .columns.reactivation-box-inner
+              .reactivation-modules(ng-repeat="glbla in siteAsset.globalAs track by $index"  data-uuid="{{flyout.uuid}}")
+                a.button.choose-reactivation-assets( data-asset-type="globalAs"  data-asset-uuid="{{glbla.uuid}}" data-asset-date="{{siteAsset.date}}") {{glbla.name}}

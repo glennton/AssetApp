@@ -1,3 +1,23 @@
+app.filter('slice', function() {
+    return function(arr, start, end) {
+        if(arr != null){
+            return arr.slice(start, end);
+        }
+    };
+});
+
+app.filter('uuidFilter', function() {
+    return function (siteAsset, uuid) {
+        var items = [];
+        angular.forEach(siteAsset, function (value, key) {
+            if (siteAsset[key].uuid === uuid && siteAsset[key].uuid != null) {
+                items.push(value);
+            }
+        });
+        return items;
+    };
+});
+
 app.directive('formInput',function(){
     return {
         restrict: 'C',
@@ -15,7 +35,7 @@ app.directive('assetListNav',function($stateParams){
     return {
         restrict: 'E',
         replace: true,
-        templateUrl: 'views/assetList.tpl.html',
+        templateUrl: 'views/siteAssetList.tpl.html',
         scope: true,
         link: function($scope, element, attrs){
             $scope.getMonthNav = function(x){
@@ -35,57 +55,60 @@ app.directive('reactivationAssetListNav',function($stateParams){
         restrict: 'E',
         replace: true,
         templateUrl: 'views/reactivationAssetList.tpl.html',
-        scope: true,
-        link: function($scope, element, attrs){
-            $scope.getReactivationMonthNav = function(x){
-                $scope.reactivationNavToggles.assetListMonth = null;
-                $scope.reactivationNavToggles.assetListMonth = x;
-            }
-            $scope.getReactivationDateNav = function(x){
-                $scope.reactivationNavToggles.assetListDate = null;
-                $scope.reactivationNavToggles.assetListDate = x;
-            }
-        }
+        scope: true
     }
 })
-
-
-
 
 ////////////////////////////////////////////////////////////////////////
 ///////////////////////// EDITOR DIRECTIVES //////////////////////////
 ////////////////////////////////////////////////////////////////////////
 
-app.directive('cancelMode',function($state , parseData, uuid4){
+////////////////////////////////////////////////////////////////////////
+///////////////////////// HOMEPAGE DIRECTIVES //////////////////////////
+////////////////////////////////////////////////////////////////////////
+
+//////////////////////////// CHANGE MAIN INFO //////////////////////////
+
+app.directive('changeNotes',function($state , parseData){
     return {
         restrict: 'E',
         replace: true,
-        template: '<a class="button" ng-show="currentAsset.editingMode">Cancel</a>',
+        template: '<div class="change-notes"><p>Notes:</p><pre>{{tempCoreInfo.notes}}</pre><textarea placeholder="Notes" ng-value="tempCoreInfo.notes" ng-model="tempCoreInfo.notes"></textarea><a class="button">Exit Editing Mode</a></div>',
         scope: true,
         link: function($scope, element, attrs){
-            element.on('click' , function(){
-                console.log($scope.currentAsset.currentMode)
-                $scope.currentAsset.editingMode = false;
-                $scope.currentAsset.currentMode = null;
-                $scope.reactivationNavToggles.assetListDate = null;
-                $scope.reactivationNavToggles.assetListMonth = null;
-                $scope.$apply();
+            element.find('pre').on('click' , function(){
+                element.addClass('editing-mode')
+            })
+            element.find('a').on('click' , function(){
+                element.removeClass('editing-mode')
             })
         }
     }
 })
 
-////////////////////////////////////////////////////////////////////////
-///////////////////////// HOMEPAGE DIRECTIVES //////////////////////////
-////////////////////////////////////////////////////////////////////////
-
 /////////////////////////// CREATE NEW MODULE //////////////////////////
 
-app.directive('addModule',function($state , parseData, uuid4){
+app.directive('btnChangeDate',function(){
     return {
         restrict: 'E',
         replace: true,
-        template: '<span class="button add-hp-module"><a>{{addModuleTitle}}</a><input class="formInput" placeholder="1" value="1"></input></span>',
+        scope: true,
+        template: '<div class="calendar-container"><a ng-click="triggerCalendar()"><i class="fi-calendar"></i>&nbsp;&nbsp; {{tempCoreInfo.month}} / {{tempCoreInfo.day}}&nbsp;&nbsp;&nbsp;<i class="fi-arrow-right"></i>&nbsp;&nbsp;&nbsp;&nbsp; {{tempCoreInfo.endMonth}} / {{tempCoreInfo.endDay}}</a><input style="background-color:transparent;border:0;height:0px;width:0px;padding:0;display:block;overflow:hidden" date-range-picker class="form-control date-picker" ng-model="datePicker.date"/></div>',
+        link: function($scope, element, attrs , ngModel){
+            element.find('a').on('click' , function(){
+                element.find('input').trigger( "click" );
+            })
+        }
+    }
+})
+
+/////////////////////////// CREATE NEW MODULE //////////////////////////
+
+app.directive('addModule',function(uuid4, modelTemplates){
+    return {
+        restrict: 'E',
+        replace: true,
+        template: '<span class="button add-hp-module" ng-show="editMode"><a><i class="fi-plus"></i> &nbsp;{{addModuleTitle}}</a><input class="formInput" placeholder="1" value="1"></input></span>',
         scope: true,
         link: function($scope, element, attrs){
             $scope.addModuleTitle = attrs.addAssetTitle
@@ -94,12 +117,28 @@ app.directive('addModule',function($state , parseData, uuid4){
                 var assetType = attrs.addAssetType;
                 if(ctaCount < 10){
                     for(i = 0 ; i < ctaCount; i++){
-                        console.log(ctaCount)
-                        var tempModel = angular.copy($scope.modelTemplates[assetType])
-                        var newUUID = uuid4.generate();
-                        var currentAssetData = parseData.returnIndexes($scope.siteData);
-                        tempModel.uuid = newUUID
-                        $scope.siteData[currentAssetData.assetIndex][assetType].push(tempModel);
+                        var tempModel;
+                        var trackingString = $scope.tempCoreInfo.year +'_'+ $scope.tempCoreInfo.month +'_'+ $scope.tempCoreInfo.day
+                        
+                        if(assetType == 'homepageModules'){
+                            tempModel = modelTemplates.getHomepageModel()
+                            tempModel.bgcta.tracking = trackingString + '-_-HP_00BTMIMAGE-_-'
+                        }
+                        if(assetType == 'flyouts'){    
+                            tempModel = modelTemplates.getFlyoutModel()
+                            tempModel.tracking = trackingString + '-_-TOPNAV_FLYOUT-_-'
+                        }
+                        if(assetType == 'globalAs'){   
+                            tempModel = modelTemplates.getGlobalAModel()
+                            tempModel.tracking = trackingString + '-_-GLOBAL_A-_-'
+                        }
+                        if(assetType == 'globalCs'){  
+                            tempModel = modelTemplates.getGlobalCModel()
+                            tempModel.tracking = trackingString + '-_-GLOBAL_DROPDOWN-_-'
+                        }
+
+                        tempModel.uuid = uuid4.generate();
+                        $scope.tempCoreInfo[assetType].push(tempModel);
                         tempModel.length = 0;
                     }
                 }else{
@@ -123,41 +162,6 @@ app.directive('addModule',function($state , parseData, uuid4){
 })
 
 /////////////////////////// HOMEPAGE MODULES /////////////////////////
-
-app.directive("deleteModule", function(parseData , $state){   
-    return{
-        restrict: 'E',
-        replace: true,
-        scope: true,
-        template: '<a class="button small btn-delete-module" data-parent-module-uuid="{{homepageModule.uuid}}">DEL</a>',
-        link: function($scope , element, attrs){              
-            element.on("click", function(e){
-                var currentAssetData = parseData.returnIndexes($scope.siteData,{'assetType' : 'homepageModules','assetID' : attrs.parentModuleUuid});
-                $scope.siteData[currentAssetData.assetIndex].homepageModules.splice(currentAssetData.homepageModulesIndex,1);
-                $scope.$apply();
-            });
-        }
-    }
-});
-
-app.directive('setModuleCols',function($state , parseData){
-    return {
-        restrict: 'E',
-        scope: true,
-        template: '<div class="col-setter"><a ng-class="{\'active\':homepageModule.columns == \'1\' }" class="button small" data-set-cols="1">1 Col</a><a ng-class="{\'active\':homepageModule.columns == \'2\' }" class="button small" data-set-cols="2">2 Col</a><a ng-class="{\'active\':homepageModule.columns == \'3\' }" class="button small" data-set-cols="3">3 Col</a>  <input type="hidden" name="{{homepageModule.columns}}" placeholder="CTA Columns" ng-value="homepageModule.columns" ng-model="homepageModule.columns" class="formInput homepageModuleCols"/></a></div>',
-        link: function($scope, element, attrs , ngModel) {
-            element.find('a').each(function(){
-                $(this).on('click' , function(){
-                    var parentModuleUuid = $(this).closest('.col-info-container').attr('data-uuid')
-                    var currentAssetData = parseData.returnIndexes($scope.siteData,{'assetType' : 'homepageModules','assetID' : parentModuleUuid});
-                    $scope.siteData[currentAssetData.assetIndex].homepageModules[currentAssetData.homepageModulesIndex].columns = $(this).attr('data-set-cols');
-                    $scope.$apply();
-                })
-            })
-            
-        }
-    };
-});
 
 app.directive('trackModuleRowPosition',function($timeout , $rootScope){
     return {
@@ -230,14 +234,15 @@ app.directive("createModuleCta", function(parseData , $state, uuid4){
                 var ctaCount =  element.find('input').val()  
                 if(ctaCount < 10){
                     for(i = 0 ; i < ctaCount; i++){
-                        var newUUID = uuid4.generate()
-                        var newCta = {"uuid" : uuid4.generate(), "name" : "", "link" : "", "tracking" : ""};
-                        var currentAssetData = parseData.returnIndexes($scope.siteData,{'assetType' : 'homepageModules','assetID' : attrs.parentModuleUuid});
-                        var ctaData = $scope.siteData[currentAssetData.assetIndex].homepageModules[currentAssetData.homepageModulesIndex].ctas;
+                        var trackingString = $scope.tempCoreInfo.year +'_'+ $scope.tempCoreInfo.month +'_'+ $scope.tempCoreInfo.day;
+                        var newUUID = uuid4.generate();
+                        var newCta = {"uuid" : uuid4.generate(), "name" : "", "link" : "", "tracking" : trackingString + "-_-HP_00BTM-_-"};
+                        var hpModIndex =  parseData.uuidToIndex($scope.tempCoreInfo.homepageModules , attrs.parentModuleUuid);
+                        var ctaData = $scope.tempCoreInfo.homepageModules[hpModIndex].ctas;
                         ctaData.push(newCta)
                     }
                 }else{
-                    alert('Are you nuts?! CTA Count must be less than 10')
+                    alert('Are you nuts?! Try less CTAS.')
                 }
                 element.find('input').val('1')
                 $scope.$apply();
@@ -256,65 +261,9 @@ app.directive("createModuleCta", function(parseData , $state, uuid4){
     }
 });
 
-app.directive("removeModuleCta", function(parseData , $state){   
-    return{
-        restrict: 'E',
-        replace: true,
-        scope: true,
-        template: '<div class="col-info-delete" data-parent-module-uuid="{{homepageModule.uuid}}" data-cta-uuid="{{cta.uuid}}""><a><i class="fi-x-circle large"></i></a></div>',
-        link: function($scope , element, attrs){              
-            element.children('a').on("click", function(e){
-                var currentAssetData = parseData.returnIndexes($scope.siteData,{'assetType' : 'homepageModules','assetID' : attrs.parentModuleUuid},{'assetType' : 'ctas','assetID' : attrs.ctaUuid});
-                console.log(currentAssetData)
-                ctaList = $scope.siteData[currentAssetData.assetIndex].homepageModules[currentAssetData.homepageModulesIndex].ctas.splice(currentAssetData.ctasIndex,1);
-                $scope.$apply();
-            });
-        }
-    }
-});
-
-
 ////////////////////////////////////////////////////////////////////////
 ///////////////////////// REACTIVATION TOOL ////////////////////////////
 ////////////////////////////////////////////////////////////////////////
-
-app.directive('openReactivationTool',function(){
-    return {
-        restrict: 'E',
-        replace: true,
-        scope: true,
-        template: '<a class="button">Add Reactivation</a>',
-        link: function($scope, element){
-            element.on('click', function(){
-                if($scope.currentAsset.currentMode == 'reactivation'){
-                    $scope.currentAsset.currentMode = 0
-                    $scope.currentAsset.editingMode = false
-                }
-                if($scope.currentAsset.currentMode !== 'reactivation'){
-                    $scope.currentAsset.currentMode = 'reactivation'
-                    $scope.currentAsset.editingMode = true
-                    
-                }
-                $scope.$apply();
-            })
-        }
-    }
-})
-
-app.directive('chooseReactivationDate',function(parseData){
-    return {
-        restrict: 'E',
-        replace: true,
-        scope: true,
-        template: '<a data-reactivation-date="{{siteAsset.date}}" ng-class="{active : siteAsset.date == btnToggles.reactivationDate}" class="button">{{siteAsset.date}}</a>',
-        link: function($scope, element, attrs){
-            element.on('click' , function(){
-                $scope.btnToggles.reactivationDate = attrs.reactivationDate
-                $scope.$apply();
-            })
-        }   
-    }
-})
 
 app.directive('chooseReactivationAssets',function(parseData){
     return {
@@ -330,7 +279,6 @@ app.directive('chooseReactivationAssets',function(parseData){
                 var postData = $scope.siteData[pastAssetData.assetIndex][assetType][pastAssetData[assetTypeIndex]]
                 var tempData = $scope.tempDataModel[assetType].tempData;
                 var tempList = $scope.tempDataModel[assetType].tempList;
-                console.log(tempData)
                 if(tempData.length < 1){
                     tempData.push(postData);
                     tempList.push(postData.uuid);
@@ -356,57 +304,55 @@ app.directive('chooseReactivationAssets',function(parseData){
     }
 })
 
-app.directive('addReactivationAssets',function(parseData, uuid4){
+app.directive('addReactivationAssets',function(parseData, uuid4, reactivationVarService){
     return {
         restrict: 'E',
         replace: true,
         scope: true,
-        template: '<a class="button text-center">Commit Reactivation Selections</a>',
+        template: '<a class="button text-center confirm-btn ">Save</a>',
         link: function($scope, element, attrs){
             element.on('click' , function(){
+
                 var currentAssetData = parseData.returnIndexes($scope.siteData);
+                //Prepare and Save Data to tempCoreInfo
                 var sanitizeData = function(x){
-                    uuid4.generate()
-                    var assetType = x
-                    var tempData = angular.copy($scope.tempDataModel[assetType].tempData)
-                    var tempList = angular.copy($scope.tempDataModel[assetType].tempList)
-                    for(i = 0; i < tempData.length; i++){
-                        if((i == 0) && ($scope.siteData[currentAssetData.assetIndex][assetType].length == 1) && ($scope.siteData[currentAssetData.assetIndex][assetType][0].uuid.length < 2)){
-                            $scope.siteData[currentAssetData.assetIndex][assetType].splice(0 , 1);
-                        }
-                        tempData[i].uuid = uuid4.generate();
-                        tempData[i].reactivation = 'true';
-                        tempData[i].reactivationDate = $scope.reactivationSelectedDate;
-                        tempData[i].rowPosition = '99';
-                        if(assetType == 'homepageModules'){
-                            for(y = 0; y < tempData[i].ctas.length; y++){
-                                tempData[i].ctas[y].uuid = uuid4.generate();
+                    //For Each Main Resource added to temp data (Homepages, Flyouts, Global A, Global C)
+                    for(j = 0; j < x.length; j++){
+                        var assetType = x[j];
+                        var tempData = angular.copy($scope.tempDataModel[assetType].tempData)
+                        var tempList = angular.copy($scope.tempDataModel[assetType].tempList)
+                        for(i = 0; i < tempData.length; i++){
+
+                            //Give Resource new UUID
+                            tempData[i].uuid = uuid4.generate();
+                            //Set Reactivation Flag to True
+                            tempData[i].reactivation = 'true';
+                            //Set Reativation Date
+                            tempData[i].reactivationDate = $scope.reactivationSelectedDate;
+                            //Default position to Last
+                            tempData[i].rowPosition = '99';
+                            // If resources includes one or more CTAS
+                            if(assetType == 'homepageModules'){
+                                //For Each Sub Resource added to temp data (CTAS in Homepages)
+                                for(y = 0; y < tempData[i].ctas.length; y++){
+                                    //Give resource new UUID
+                                    tempData[i].ctas[y].uuid = uuid4.generate();
+                                }
                             }
+                            //If scope variable doesnt exist, create it
+                            if($scope.reactivationModel.reactivationAsset[assetType] == null){
+                                $scope.reactivationModel.reactivationAsset[assetType] = []
+                            }
+                            //Push To Site Asset Scope
+                            $scope.reactivationModel.reactivationAsset[assetType].push(tempData[i])
                         }
-                        $scope.siteData[currentAssetData.assetIndex][assetType].push(tempData[i])
+
                     }
                 }
-                var clearData = function(x){
-                    var assetType = x
-                    var tempData = $scope.tempDataModel[assetType].tempData;
-                    var tempList = $scope.tempDataModel[assetType].tempList;
-                    for(i = 0; i < tempData.length; i++){
-                        z = (tempData.length - i) - 1
-                        tempData.splice(z , 1);
-                    }
-                }
-                sanitizeData('homepageModules');
-                sanitizeData('flyouts');
-                sanitizeData('globalAs');
-                sanitizeData('globalCs');
 
-                clearData('homepageModules');
-                clearData('flyouts');
-                clearData('globalAs');
-                clearData('globalCs');
-
-                $scope.$apply();
-                $scope.tempDataModel.length = 0;
+                sanitizeData(['homepageModules','flyouts','globalAs','globalCs'])
+                //Reset tempDataModel
+                delete $scope.tempDataModel
                 $scope.tempDataModel = {
                         "homepageModules" : {
                             'tempList' : undefined,
@@ -427,12 +373,9 @@ app.directive('addReactivationAssets',function(parseData, uuid4){
                     };
                 $('.choose-reactivation-assets').removeClass('active');
 
-                $scope.currentAsset.editingMode = false;
-                $scope.currentAsset.currentMode = null;
-                $scope.reactivationNavToggles.assetListDate = null;
-                $scope.reactivationNavToggles.assetListMonth = null;
-                $scope.$apply(function(){
-                });
+                //Reset reactivation vars
+                reactivationVarService.clear();
+                $scope.$apply();
             })
         }   
     }
@@ -465,7 +408,7 @@ app.directive('openJadeTool',function(){
 ////////////////////////////////////////////////////////////////////////
 ////////////////////////////// ADD  NEW  ///////////////////////////////
 ////////////////////////////////////////////////////////////////////////
-
+/*
 app.directive('newFromReactivationTrigger',function(){
     return {
         restrict: 'E',
@@ -501,10 +444,11 @@ app.directive('btnGetCode',function($state , parseData, uuid4){
     return {
         restrict: 'E',
         replace: true,
-        template: '<span class="button child-btns">Get <a>Jade Code</a><a> Activity CSV</a></span>',
+        template: '<span class="button child-btns"><i class="fi-clipboard-pencil"></i> &nbsp;Get <a class="jade-btn">Jade Code</a><a> Activity CSV</a></span>',
         scope: true,
         link: function($scope, element){
             element.on('click', function(){
+
             })
         }
     }
@@ -516,15 +460,18 @@ app.directive('btnNewAsset',function(){
         restrict: 'E',
         replace: true,
         scope: true,
-        template: '<span class="button child-btns">New<a> From Blank</a><a> From Template</a></span>',
+        template: '<span class="button child-btns">New<a ui-sref="main.editor.newAsset"> From Blank</a><a> From Template</a></span>',
         link: function($scope, element){
-            $scope.btnToggles.newFromNew = false
-            element.on('click', function(){
+            element.find('a').on('click', function(){
+                $scope.assetNavToggles.assetListMonth = null;
+                $scope.reactivationVars.assetListMonth = null;
+                $scope.reactivationVars.assetListDate = null;
+                $scope.assetNavToggles.assetListDate = null;
             })
         }
     }
 })
-
+*/
 
 
 
@@ -536,10 +483,22 @@ app.directive('navBtnSort',function(){
     return {
         restrict: 'E',
         replace: true,
-        template: '<a class="button">Quick View</a>',
+        template: '<a class="button"><i class="fi-arrows-in"></i> &nbsp;Quick View</a>',
         link: function($scope, element){
             element.on('click', function(){
                 $('#site-asset-container').toggleClass('sort-site-assets');
+            })
+        }
+    }
+})
+app.directive('navBtnTable',function(){
+    return {
+        restrict: 'E',
+        replace: true,
+        template: '<a class="button"><i class="fi-align-justify"></i> &nbsp;Table View</a>',
+        link: function($scope, element){
+            element.on('click', function(){
+                $('#site-asset-container').toggleClass('table-site-assets');
             })
         }
     }
@@ -556,9 +515,34 @@ app.directive('navBtnAddFromTemplate',function(){
 })
 
 
+////////////////////////////////////////////////////////////////////////
+/////////////////////////// CUSTOM PLUGINS  ////////////////////////////
+////////////////////////////////////////////////////////////////////////
 
 
+app.directive('stickyNav',function(){
+    return {
+        restrict: 'C',
+        replace: true,
+        template: '<a class="button">Add From Template</a>',
+        link: function($scope, element, attrs , ngModel){
+        }
+    }
+})
 
+app.directive('btnDateRangePicker',function(){
+    return {
+        restrict: 'E',
+        replace: true,
+        scope: true,
+        template: '<div><a class="button"><span ng-show="datePicker.status">Pick</span><span ng-hide="datePicker.status">Change</span> Date</a><input date-range-picker class="form-control date-picker" ng-model="datePicker.date"/></div>',
+        link: function($scope, element, attrs , ngModel){
+            element.find('a').on('click' , function(){
+                element.find('input').trigger( "click" );
+            })
+        }
+    }
+})
 
 
 
